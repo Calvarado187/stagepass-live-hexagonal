@@ -1,0 +1,484 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="page1" name="01 01 / Modelo de dominio">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="01 / Modelo de dominio&#10;Entidades puras · nombres coincidentes con el código · atributos inmutables sin ORM" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="Event" value="&lt;b&gt;«class» Event&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ name: str&lt;br&gt;+ kind: str&lt;br&gt;+ venue_id: str&lt;br&gt;+ starts_at: datetime&lt;br&gt;+ state: EventState&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="330" height="235" />
+        </mxCell>
+        <mxCell id="Order" value="&lt;b&gt;«class» Order&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ event_id: str&lt;br&gt;+ client: Client&lt;br&gt;+ seats: tuple[Seat, ...]&lt;br&gt;+ quote: Quote&lt;br&gt;+ created_at: datetime&lt;br&gt;+ expires_at: datetime&lt;br&gt;+ provider: str&lt;br&gt;+ state: OrderState&lt;br&gt;+ payment_id: str&lt;br&gt;+ reconciliation: bool&lt;hr&gt;+ holds_at(now: datetime): bool&lt;br&gt;+ expire(now: datetime)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="435" y="110" width="350" height="350" />
+        </mxCell>
+        <mxCell id="Client" value="&lt;b&gt;«class» Client&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ name: str&lt;br&gt;+ email: str&lt;br&gt;+ mobile: str&lt;br&gt;+ nationality: str&lt;hr&gt;+ validate()&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="110" width="310" height="235" />
+        </mxCell>
+        <mxCell id="Seat" value="&lt;b&gt;«class» Seat&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ venue_id: str&lt;br&gt;+ location: str&lt;br&gt;+ base_price: Decimal&lt;br&gt;+ state: SeatState&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="510" width="330" height="220" />
+        </mxCell>
+        <mxCell id="Quote" value="&lt;b&gt;«class» Quote&lt;/b&gt;&lt;hr&gt;+ subtotal: Decimal&lt;br&gt;+ fee: Decimal&lt;br&gt;+ discount: Decimal&lt;br&gt;+ total: Decimal&lt;hr&gt;+ calculate(seats: tuple[Seat, ...])&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="435" y="555" width="350" height="225" />
+        </mxCell>
+        <mxCell id="Ticket" value="&lt;b&gt;«class» Ticket&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ order_id: str&lt;br&gt;+ code: str&lt;br&gt;+ security_hash: str&lt;br&gt;+ issued_at: datetime&lt;br&gt;+ claims: TicketClaims&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="510" width="310" height="260" />
+        </mxCell>
+        <mxCell id="edge0" value="0..* órdenes / 1 evento" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=none;exitX=0.0;exitY=0.2857142857142857;entryX=1.0;entryY=0.425531914893617;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Order" target="Event">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="0..* / 1" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=none;exitX=1.0;exitY=0.2857142857142857;entryX=0.0;entryY=0.425531914893617;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Order" target="Client">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" value="1 orden / 1..6 instantáneas" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=none;exitX=0.0;exitY=0.7857142857142857;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Order" target="Seat">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="400" y="385" />
+              <mxPoint x="400" y="480" />
+              <mxPoint x="200" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" value="1 / 1" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;startArrow=diamond;startFill=1;endArrow=none;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Order" target="Quote">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4" value="1 / 0..6 tickets" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=none;exitX=1.0;exitY=0.7857142857142857;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Order" target="Ticket">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="815" y="385" />
+              <mxPoint x="815" y="480" />
+              <mxPoint x="1010" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="EventState: Programado | Agotado | Cancelado. SeatState: Disponible | Bloqueado | Vendido.&#10;OrderState: Pendiente de Pago | Aprobada | Rechazada | Expirada. Fecha/hora UTC; dinero Decimal. TicketClaims: vista 09.&#10;Línea = asociación; rombo lleno = composición. Los identificadores representan referencias entre agregados." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page2" name="02 02 / Casos de uso y adaptadores primarios">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="02 / Casos de uso y adaptadores primarios&#10;El servicio implementa el contrato de entrada; HTTP y tareas programadas dependen del contrato" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="BookingUseCases" value="&lt;b&gt;«interface» BookingUseCases&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ events(): tuple[Event, ...]&lt;br&gt;+ availability(event_id: str): tuple[Seat, ...]&lt;br&gt;+ quote(event_id: str, seat_ids: tuple[str, ...]): Quote&lt;br&gt;+ reserve(event_id: str, client: Client, seat_ids: tuple[str, ...], provider: str): Order&lt;br&gt;+ confirm(provider: str, reference: PaymentReference): Order&lt;br&gt;+ expire(): int&lt;br&gt;+ get_order(order_id: str): Order&lt;br&gt;+ tickets(order_id: str): tuple[Ticket, ...]&lt;br&gt;+ ticket_svg(order_id: str, ticket_id: str): str&lt;br&gt;+ verify_ticket(order_id: str, ticket_id: str): bool&lt;br&gt;+ dispatch(): int&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="120" width="500" height="630" />
+        </mxCell>
+        <mxCell id="BookingService" value="&lt;b&gt;«class» BookingService&lt;/b&gt;&lt;hr&gt;- catalog: Catalog&lt;br&gt;- store: OrderStore&lt;br&gt;- clock: Clock; ids: IdSource&lt;br&gt;- gateways: dict[str, PaymentGateway]&lt;br&gt;- signer: TicketSigner; renderer: TicketRenderer&lt;br&gt;- notifications: dict[str, Notification]&lt;br&gt;- invoice: Invoice&lt;hr&gt;+ events(): tuple[Event, ...]&lt;br&gt;+ availability(event_id: str): tuple[Seat, ...]&lt;br&gt;+ quote(event_id: str, seat_ids: tuple[str, ...]): Quote&lt;br&gt;+ reserve(event_id: str, client: Client, seat_ids: tuple[str, ...], provider: str): Order&lt;br&gt;+ confirm(provider: str, reference: PaymentReference): Order&lt;br&gt;+ expire(): int&lt;br&gt;+ get_order(order_id: str): Order&lt;br&gt;+ tickets(order_id: str): tuple[Ticket, ...]&lt;br&gt;+ ticket_svg(order_id: str, ticket_id: str): str&lt;br&gt;+ verify_ticket(order_id: str, ticket_id: str): bool&lt;br&gt;+ dispatch(): int&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\service.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="665" y="120" width="500" height="630" />
+        </mxCell>
+        <mxCell id="edge0" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.0;exitY=0.5;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="BookingUseCases">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="Las dependencias de BookingService son contratos del núcleo; nunca importa adaptadores.&#10;Línea discontinua con triángulo vacío = realización de interfaz. Se muestran los métodos públicos del contrato.&#10;El ensamblaje de dependencias se realiza en bootstrap.build(). Todos los puertos están en core/ports.py." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page3" name="03 03 / Entrada web y tareas temporales">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="03 / Entrada web y tareas temporales&#10;Los adaptadores primarios traducen eventos externos a operaciones del núcleo" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="Handler" value="&lt;b&gt;«primary adapter» Handler&lt;/b&gt;&lt;hr&gt;- service: BookingUseCases {injected}&lt;br&gt;- gateways: dict {adapter registry}&lt;hr&gt;+ do_GET(): None&lt;br&gt;+ do_POST(): None&lt;br&gt;+ handle_request(post: bool): None&lt;br&gt;+ reply(data, status, content_type): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\http.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="130" width="440" height="275" />
+        </mxCell>
+        <mxCell id="ExpiryScheduler" value="&lt;b&gt;«primary adapter» ExpiryScheduler&lt;/b&gt;&lt;hr&gt;- service: BookingUseCases&lt;br&gt;- stop: threading.Event&lt;br&gt;- thread: Thread&lt;hr&gt;+ start()&lt;br&gt;+ close()&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\scheduler.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="480" width="440" height="230" />
+        </mxCell>
+        <mxCell id="BookingUseCases" value="&lt;b&gt;«interface» BookingUseCases&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ events(): tuple[Event, ...]&lt;br&gt;+ availability(event_id: str): tuple[Seat, ...]&lt;br&gt;+ quote(event_id: str, seat_ids: tuple[str, ...]): Quote&lt;br&gt;+ reserve(event_id: str, client: Client, seat_ids: tuple[str, ...], provider: str): Order&lt;br&gt;+ confirm(provider: str, reference: PaymentReference): Order&lt;br&gt;+ expire(): int&lt;br&gt;+ get_order(order_id: str): Order&lt;br&gt;+ tickets(order_id: str): tuple[Ticket, ...]&lt;br&gt;+ ticket_svg(order_id: str, ticket_id: str): str&lt;br&gt;+ verify_ticket(order_id: str, ticket_id: str): bool&lt;br&gt;+ dispatch(): int&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="650" y="150" width="515" height="570" />
+        </mxCell>
+        <mxCell id="edge0" value="invoca" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=1.0;exitY=0.4909090909090909;entryX=0.0;entryY=0.2807017543859649;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Handler" target="BookingUseCases">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="560" y="265" />
+              <mxPoint x="560" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="expire / dispatch" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=1.0;exitY=0.5;entryX=0.0;entryY=0.7192982456140351;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="ExpiryScheduler" target="BookingUseCases">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="560" y="595" />
+              <mxPoint x="560" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="Handler es una clase interna de make_server(); recibe el servicio por cierre. También expone el endpoint de webhook.&#10;El parser de cada pasarela transforma su notificación técnica a PaymentReference antes de invocar confirm().&#10;Línea discontinua con flecha abierta = dependencia. No hay cálculo de tarifas en los adaptadores primarios." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page4" name="04 04 / Catálogo y persistencia">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="04 / Catálogo y persistencia&#10;Puertos definidos en el núcleo; implementaciones simuladas reemplazables" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="Catalog" value="&lt;b&gt;«interface» Catalog&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ events(): tuple[Event, ...]&lt;br&gt;+ event(event_id: str): Event&lt;br&gt;+ seats(venue_id: str): tuple[Seat, ...]&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="495" height="220" />
+        </mxCell>
+        <mxCell id="OrderStore" value="&lt;b&gt;«interface» OrderStore&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ transaction(): ContextManager[None]&lt;br&gt;+ orders(): tuple[Order, ...]&lt;br&gt;+ order(order_id: str): Order&lt;br&gt;+ save_order(order: Order): None&lt;br&gt;+ tickets(order_id: str): tuple[Ticket, ...]&lt;br&gt;+ save_ticket(ticket: Ticket): None&lt;br&gt;+ deliveries(): tuple[Delivery, ...]&lt;br&gt;+ save_delivery(delivery: Delivery): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="670" y="110" width="495" height="310" />
+        </mxCell>
+        <mxCell id="MySqlCatalogMock" value="&lt;b&gt;«mock adapter» MySqlCatalogMock&lt;/b&gt;&lt;hr&gt;- data: tuple[Event, ...]&lt;hr&gt;+ events(): tuple[Event, ...]&lt;br&gt;+ event(event_id: str): Event&lt;br&gt;+ seats(venue_id: str): tuple[Seat, ...]&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\storage.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="490" width="495" height="230" />
+        </mxCell>
+        <mxCell id="MongoOrderStoreMock" value="&lt;b&gt;«mock adapter» MongoOrderStoreMock&lt;/b&gt;&lt;hr&gt;- _orders: dict[str, Order]&lt;br&gt;- _tickets: dict[str, Ticket]&lt;br&gt;- _deliveries: dict[str, Delivery]&lt;br&gt;- _lock: RLock&lt;hr&gt;+ transaction(): ContextManager[None]&lt;br&gt;+ orders(): tuple[Order, ...]&lt;br&gt;+ order(order_id: str): Order&lt;br&gt;+ save_order(order: Order): None&lt;br&gt;+ tickets(order_id: str): tuple[Ticket, ...]&lt;br&gt;+ save_ticket(ticket: Ticket): None&lt;br&gt;+ deliveries(): tuple[Delivery, ...]&lt;br&gt;+ save_delivery(delivery: Delivery): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\storage.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="670" y="490" width="495" height="310" />
+        </mxCell>
+        <mxCell id="edge0" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="MySqlCatalogMock" target="Catalog">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="MongoOrderStoreMock" target="OrderStore">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="Destino arquitectónico: MySQL para catálogo legado; MongoDB para órdenes, tickets y bandeja de salida.&#10;Esta entrega usa memoria: NO requiere ni conecta servidores de bases de datos. OrderStore garantiza atomicidad en un proceso.&#10;RLock y snapshots pertenecen al adaptador. El núcleo no conoce conexiones, consultas SQL, documentos BSON ni bloqueos técnicos." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page5" name="05 05 / Pagos externos">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="05 / Pagos externos&#10;Contrato común; tres proveedores concretos con traducción técnica propia" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="PaymentGateway" value="&lt;b&gt;«interface» PaymentGateway&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ register(request: PaymentRequest): PaymentSession&lt;br&gt;+ verify(reference: PaymentReference): VerifiedPayment&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="400" height="200" />
+        </mxCell>
+        <mxCell id="GatewayMock" value="&lt;b&gt;«mock adapter» GatewayMock&lt;/b&gt;&lt;hr&gt;+ name: str; reference_field: str&lt;br&gt;- _key: bytes&lt;br&gt;- _payments: dict[str, VerifiedPayment]&lt;br&gt;- _lock: RLock&lt;hr&gt;+ register(request)&lt;br&gt;+ simulate(transaction_id, status)&lt;br&gt;+ parse_notification(payload)&lt;br&gt;+ verify(reference)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\payments.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="110" width="555" height="295" />
+        </mxCell>
+        <mxCell id="PayPalMock" value="&lt;b&gt;«mock adapter» PayPalMock&lt;/b&gt;&lt;hr&gt;+ name = &amp;quot;paypal&amp;quot;&lt;br&gt;+ reference_field = &amp;quot;resource_id&amp;quot;&lt;hr&gt;+ inherited: register(), verify()&lt;br&gt;+ inherited: simulate(), parse_notification()&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\payments.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="535" width="330" height="225" />
+        </mxCell>
+        <mxCell id="WompiMock" value="&lt;b&gt;«mock adapter» WompiMock&lt;/b&gt;&lt;hr&gt;+ name = &amp;quot;wompi&amp;quot;&lt;br&gt;+ reference_field = &amp;quot;transaction_id&amp;quot;&lt;hr&gt;+ inherited: register(), verify()&lt;br&gt;+ inherited: simulate(), parse_notification()&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\payments.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="435" y="535" width="330" height="225" />
+        </mxCell>
+        <mxCell id="PseMock" value="&lt;b&gt;«mock adapter» PseMock&lt;/b&gt;&lt;hr&gt;+ name = &amp;quot;pse&amp;quot;&lt;br&gt;+ reference_field = &amp;quot;cus&amp;quot;&lt;hr&gt;+ inherited: register(), verify()&lt;br&gt;+ inherited: simulate(), parse_notification()&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\payments.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="835" y="535" width="330" height="225" />
+        </mxCell>
+        <mxCell id="edge0" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.0;exitY=0.3389830508474576;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="GatewayMock" target="PaymentGateway">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="hereda" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.21621621621621623;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="PayPalMock" target="GatewayMock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="200" y="465" />
+              <mxPoint x="730" y="465" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" value="hereda" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.4864864864864865;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="WompiMock" target="GatewayMock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="600" y="495" />
+              <mxPoint x="880" y="495" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" value="hereda" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.7027027027027027;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="PseMock" target="GatewayMock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="Los payloads resource_id / transaction_id / cus son ficticios: no representan las API oficiales.&#10;register() recibe PaymentRequest y devuelve PaymentSession; verify() recibe PaymentReference y devuelve VerifiedPayment.&#10;El estado aprobado se verifica contra una transacción registrada y firmada; el núcleo valida importe, moneda, orden y vigencia." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page6" name="06 06 / Tickets gráficos y criptografía">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="06 / Tickets gráficos y criptografía&#10;Dos adaptadores secundarios completamente implementados" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="TicketSigner" value="&lt;b&gt;«interface» TicketSigner&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ sign(claims: TicketClaims): str&lt;br&gt;+ verify(claims: TicketClaims, signature: str): bool&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="500" height="190" />
+        </mxCell>
+        <mxCell id="TicketRenderer" value="&lt;b&gt;«interface» TicketRenderer&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ render(ticket: Ticket, event: Event, seat: Seat): str&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="665" y="110" width="500" height="190" />
+        </mxCell>
+        <mxCell id="HmacTicketSigner" value="&lt;b&gt;«adapter» HmacTicketSigner&lt;/b&gt;&lt;hr&gt;- _secrets: dict[str, bytes]&lt;hr&gt;+ sign(claims: TicketClaims): str&lt;br&gt;+ verify(claims: TicketClaims, signature: str): bool&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\tickets.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="400" width="500" height="220" />
+        </mxCell>
+        <mxCell id="SvgTicketRenderer" value="&lt;b&gt;«adapter» SvgTicketRenderer&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ render(ticket: Ticket, event: Event, seat: Seat): str&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\tickets.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="665" y="400" width="500" height="220" />
+        </mxCell>
+        <mxCell id="edge0" value="HMAC-SHA256" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="HmacTicketSigner" target="TicketSigner">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="SVG escapado" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="SvgTicketRenderer" target="TicketRenderer">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="HmacTicketSigner canoniza TicketClaims en JSON y firma con el secreto del evento; compare_digest verifica la firma.&#10;SvgTicketRenderer produce un SVG completo, legible y descargable con código alfanumérico, asiento y hash. No requiere QR.&#10;TicketClaims se detalla en la vista 09. Los algoritmos y formatos técnicos permanecen fuera del núcleo." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page7" name="07 07 / Notificación y facturación">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="07 / Notificación y facturación&#10;Contratos separados para mensajes y emisión de factura; salidas simuladas e idempotentes" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="Notification" value="&lt;b&gt;«interface» Notification&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ send(order: Order, tickets: tuple[Ticket, ...], key: str): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="500" height="175" />
+        </mxCell>
+        <mxCell id="Invoice" value="&lt;b&gt;«interface» Invoice&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ issue(order: Order, key: str): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="665" y="110" width="500" height="175" />
+        </mxCell>
+        <mxCell id="NotificationMock" value="&lt;b&gt;«mock adapter» NotificationMock&lt;/b&gt;&lt;hr&gt;+ channel: str&lt;br&gt;+ sent: dict; fail: bool&lt;hr&gt;+ send(order: Order, tickets: tuple[Ticket,...], key: str): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\communications.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="390" width="500" height="185" />
+        </mxCell>
+        <mxCell id="DianInvoiceMock" value="&lt;b&gt;«mock adapter» DianInvoiceMock&lt;/b&gt;&lt;hr&gt;+ issued: dict; fail: bool&lt;hr&gt;+ issue(order: Order, key: str): None&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\communications.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="665" y="390" width="500" height="185" />
+        </mxCell>
+        <mxCell id="WhatsAppMock" value="&lt;b&gt;«mock adapter» WhatsAppMock&lt;/b&gt;&lt;hr&gt;+ channel = &amp;quot;whatsapp&amp;quot;&lt;hr&gt;+ send(...) {inherited}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\communications.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="660" width="240" height="140" />
+        </mxCell>
+        <mxCell id="SendGridMock" value="&lt;b&gt;«mock adapter» SendGridMock&lt;/b&gt;&lt;hr&gt;+ channel = &amp;quot;sendgrid&amp;quot;&lt;hr&gt;+ send(...) {inherited}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;adapters\communications.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#FFF2E3;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="295" y="660" width="240" height="140" />
+        </mxCell>
+        <mxCell id="edge0" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="NotificationMock" target="Notification">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="DianInvoiceMock" target="Invoice">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.24;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="WhatsAppMock" target="NotificationMock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.76;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="SendGridMock" target="NotificationMock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="BookingService crea Delivery por canal tras aprobar la orden. dispatch() reintenta pendientes sin emitir tickets nuevos.&#10;Las clases mock registran resultados en memoria: no envían mensajes ni generan facturas electrónicas reales ante DIAN." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page8" name="08 08 / Valores de pago y tiempo">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="08 / Valores de pago y tiempo&#10;Tipos del dominio intercambiados por los puertos; ninguna dependencia de SDK externos" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="PaymentRequest" value="&lt;b&gt;«value object» PaymentRequest&lt;/b&gt;&lt;hr&gt;+ order_id: str&lt;br&gt;+ amount: Decimal&lt;br&gt;+ currency: str&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="330" height="185" />
+        </mxCell>
+        <mxCell id="PaymentSession" value="&lt;b&gt;«value object» PaymentSession&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ order_id: str&lt;br&gt;+ provider: str&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="435" y="110" width="330" height="185" />
+        </mxCell>
+        <mxCell id="PaymentReference" value="&lt;b&gt;«value object» PaymentReference&lt;/b&gt;&lt;hr&gt;+ transaction_id: str&lt;br&gt;+ proof: str&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="835" y="110" width="330" height="185" />
+        </mxCell>
+        <mxCell id="VerifiedPayment" value="&lt;b&gt;«value object» VerifiedPayment&lt;/b&gt;&lt;hr&gt;+ transaction_id: str&lt;br&gt;+ order_id: str&lt;br&gt;+ provider: str&lt;br&gt;+ amount: Decimal&lt;br&gt;+ currency: str&lt;br&gt;+ status: str&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="405" width="330" height="250" />
+        </mxCell>
+        <mxCell id="Clock" value="&lt;b&gt;«interface» Clock&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ now(): datetime&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="435" y="405" width="330" height="140" />
+        </mxCell>
+        <mxCell id="IdSource" value="&lt;b&gt;«interface» IdSource&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ new(): str&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="835" y="405" width="330" height="140" />
+        </mxCell>
+        <mxCell id="SystemClock" value="&lt;b&gt;«adapter» SystemClock&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ now(): datetime&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;bootstrap.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="435" y="660" width="330" height="140" />
+        </mxCell>
+        <mxCell id="SecureIds" value="&lt;b&gt;«adapter» SecureIds&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;+ new(): str&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;bootstrap.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="835" y="660" width="330" height="140" />
+        </mxCell>
+        <mxCell id="edge0" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="SystemClock" target="Clock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="implementa" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=block;endFill=0;exitX=0.5;exitY=0.0;entryX=0.5;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="SecureIds" target="IdSource">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="Moneda de esta solución: COP. PaymentReference contiene una referencia y prueba opacas para el dominio, no un HTTPRequest.&#10;SystemClock usa UTC; SecureIds usa 128 bits aleatorios. En pruebas se inyecta ManualClock sin esperar diez minutos reales." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page9" name="09 09 / Evidencia inmutable y entrega de efectos">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="09 / Evidencia inmutable y entrega de efectos&#10;TicketClaims vincula la firma a la compra; Delivery permite reintentar salidas" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="Ticket" value="&lt;b&gt;«entity» Ticket&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ order_id: str&lt;br&gt;+ code: str&lt;br&gt;+ security_hash: str&lt;br&gt;+ issued_at: datetime&lt;br&gt;+ claims: TicketClaims&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="450" height="265" />
+        </mxCell>
+        <mxCell id="TicketClaims" value="&lt;b&gt;«value object» TicketClaims&lt;/b&gt;&lt;hr&gt;+ ticket_id: str&lt;br&gt;+ order_id: str&lt;br&gt;+ event_id: str&lt;br&gt;+ client_id: str&lt;br&gt;+ seat_id: str&lt;br&gt;+ base_price: str&lt;br&gt;+ order_total: str&lt;br&gt;+ order_created_at: str&lt;br&gt;+ code: str&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="685" y="110" width="480" height="300" />
+        </mxCell>
+        <mxCell id="Delivery" value="&lt;b&gt;«value object» Delivery&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ order_id: str&lt;br&gt;+ kind: str&lt;br&gt;+ completed: bool&lt;br&gt;+ attempts: int&lt;hr&gt;(datos inmutables)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="685" y="535" width="480" height="230" />
+        </mxCell>
+        <mxCell id="Order" value="&lt;b&gt;«entity» Order&lt;/b&gt;&lt;hr&gt;+ id: str&lt;br&gt;+ event_id: str&lt;br&gt;+ client: Client&lt;br&gt;+ seats: tuple[Seat, ...]&lt;br&gt;+ quote: Quote&lt;br&gt;+ created_at: datetime&lt;br&gt;+ expires_at: datetime&lt;br&gt;+ provider: str&lt;br&gt;+ state: OrderState&lt;br&gt;+ payment_id: str&lt;br&gt;+ reconciliation: bool&lt;hr&gt;+ holds_at(now: datetime): bool&lt;br&gt;+ expire(now: datetime)&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\models.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="435" width="450" height="365" />
+        </mxCell>
+        <mxCell id="edge0" value="1 / 1" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;startArrow=diamond;startFill=1;endArrow=none;exitX=1.0;exitY=0.4716981132075472;entryX=0.0;entryY=0.4166666666666667;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Ticket" target="TicketClaims">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" value="0..3 / 1" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;endArrow=none;exitX=0.0;exitY=0.5;entryX=1.0;entryY=0.589041095890411;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="Delivery" target="Order">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="Los claims incluyen ticket, orden, evento, cliente, asiento, precio, total, fecha de creación y código de canje.&#10;La firma usa un secreto específico del evento. Delivery.id = order.id + canal: clave idempotente para efectos secundarios.&#10;Los objetos son frozen dataclasses: las transiciones crean versiones nuevas mediante replace(), sin mutación compartida." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page10" name="10 10 / Dependencias hacia puertos secundarios">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="10 / Dependencias hacia puertos secundarios&#10;Vista de conjunto: las cajas remiten a las clases detalladas en las páginas anteriores" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="15" width="1136" height="50" />
+        </mxCell>
+        <mxCell id="BookingService" value="&lt;b&gt;«use case» BookingService&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\service.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#F5EEFF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="300" width="300" height="260" />
+        </mxCell>
+        <mxCell id="Catalog" value="&lt;b&gt;«interface» Catalog&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="110" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge0" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=0.0;exitY=0.11538461538461539;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="Catalog">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PaymentGateway" value="&lt;b&gt;«interface» PaymentGateway&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="280" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge1" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=0.0;exitY=0.34615384615384615;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="PaymentGateway">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TicketRenderer" value="&lt;b&gt;«interface» TicketRenderer&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="450" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge2" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=0.0;exitY=0.5769230769230769;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="TicketRenderer">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Invoice" value="&lt;b&gt;«interface» Invoice&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="620" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge3" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=0.0;exitY=0.8076923076923077;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="Invoice">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OrderStore" value="&lt;b&gt;«interface» OrderStore&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="110" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge4" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=1.0;exitY=0.11538461538461539;entryX=0.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="OrderStore">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TicketSigner" value="&lt;b&gt;«interface» TicketSigner&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="280" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge5" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=1.0;exitY=0.34615384615384615;entryX=0.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="TicketSigner">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Notification" value="&lt;b&gt;«interface» Notification&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="450" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge6" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=1.0;exitY=0.5769230769230769;entryX=0.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="Notification">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Clock" value="&lt;b&gt;«interface» Clock&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="620" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge7" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=1.0;exitY=0.8076923076923077;entryX=0.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="Clock">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IdSource" value="&lt;b&gt;«interface» IdSource&lt;/b&gt;&lt;hr&gt;—&lt;hr&gt;{Detalle en vistas anteriores}&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#687080&quot;&gt;core\ports.py&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontFamily=Helvetica;fontSize=12;fillColor=#E9F0FF;strokeColor=#465269;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="660" width="300" height="140" />
+        </mxCell>
+        <mxCell id="edge8" value="" style="edgeStyle=none;rounded=0;html=0;fontSize=11;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="BookingService" target="IdSource">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foot" value="En esta vista se omiten atributos y operaciones para destacar la dirección de las dependencias.&#10;BookingService usa exclusivamente estos contratos. La composición concreta está fuera del núcleo, en bootstrap.py.&#10;Las realizaciones de los adaptadores se muestran en las vistas 04 a 08; el contrato primario, en la vista 02." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="32" y="817" width="1136" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

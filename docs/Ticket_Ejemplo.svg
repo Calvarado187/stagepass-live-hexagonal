@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-label="Ticket StagePass Live">
+<rect width="960" height="420" rx="24" fill="#141425"/>
+<rect x="700" width="260" height="420" rx="24" fill="#c7ff6b"/>
+<path d="M700 20V400" stroke="#53604c" stroke-dasharray="8 8"/>
+<g fill="#f8f6ff" font-family="Arial, sans-serif">
+<text x="40" y="55" font-size="20" letter-spacing="4">STAGEPASS / LIVE</text>
+<text x="40" y="122" font-size="32" font-weight="bold">Neon Nights</text>
+<text x="40" y="159" font-size="18">Concierto · 2026-12-03 23:00 UTC</text>
+<text x="40" y="215" font-size="28">VIP-A01</text>
+<text x="40" y="252" font-size="16">Recinto: arena · Precio base: COP 150000.00</text>
+<text x="40" y="307" font-size="13">CÓDIGO DE CANJE · F8753713C3693552683BFDB58AB2BB45</text>
+<text x="40" y="341" font-size="11">Orden: 2e550cb015f247a097b005d94a34a70e</text>
+<text x="40" y="371" font-size="9">HMAC-SHA256: 0afff57d2fbf68a8b1a1082b61edf25478c0499136019668325a932029846fcb</text>
+</g><g fill="#142019" font-family="Arial, sans-serif" text-anchor="middle">
+<text x="830" y="135" font-size="18">ENTRADA</text><text x="830" y="181" font-size="32" font-weight="bold">A1</text>
+<text x="830" y="235" font-size="14">FIRMA VERIFICABLE</text><text x="830" y="280" font-size="12">DEMOSTRACIÓN ACADÉMICA</text>
+<text x="830" y="301" font-size="12">Sin validez comercial</text></g></svg>
